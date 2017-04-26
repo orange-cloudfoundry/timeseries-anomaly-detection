@@ -14,6 +14,8 @@
     <modules>
         <module>anomaly-detection-train</module>
         <module>anomaly-detection-predict</module>
+        <module>anomaly-detection-source-file</module>
+        <module>anomaly-detection-sink</module>
     </modules>
 
 
