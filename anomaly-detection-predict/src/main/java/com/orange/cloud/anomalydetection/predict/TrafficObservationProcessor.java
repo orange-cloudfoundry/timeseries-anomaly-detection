@@ -5,30 +5,31 @@ import com.orange.cloud.anomalydetection.predict.domain.Observation;
 import com.orange.cloud.anomalydetection.predict.domain.Prediction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.cloud.stream.messaging.Processor;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Sebastien Bortolussi
  */
-@RestController("/predict")
-public class PredictionController {
+@Component
+public class TrafficObservationProcessor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PredictionController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrafficObservationProcessor.class);
 
     PredictionService predictionService;
 
-    public PredictionController(PredictionService predictionService) {
+    public TrafficObservationProcessor(PredictionService predictionService) {
         this.predictionService = predictionService;
     }
 
-    @GetMapping
-    PredictionMessage predict(@RequestParam String value) throws Exception {
+    @StreamListener(Processor.INPUT)
+    @SendTo(Processor.OUTPUT)
+    public PredictionMessage predict(String value) throws Exception {
         Observation observation = new Observation(new Double(value));
         final Prediction prediction = predictionService.predict(observation);
         LOGGER.debug("prediction : + " + prediction);
         return new PredictionMessage(String.valueOf(observation.getValue()), String.valueOf(prediction.getValue()));
     }
-
 }

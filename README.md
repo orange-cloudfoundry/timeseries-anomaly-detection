@@ -30,22 +30,39 @@ $ mvn spring-boot:run
 
 So as to reuse trained model, two files are saved after the training process :
 
-- anomaly-detection-network-model_<version>.zip : trained neural network model
-- anomaly-detection-data-normalizer_<version> : data normalizer used for data engineering
+- anomaly-detection-network-model_\<version>.zip : trained neural network model
+- anomaly-detection-data-normalizer_\<version> : data normalizer used for data engineering
 
 See [dl4j - Saving and Loading a Neural Network](https://deeplearning4j.org/modelpersistence#saving-and-loading-a-neural-network), for details on saving and loading a neural network.
 
-# Making prediction
+# Making predictions
 
-## runing the application
+Making predictions will consist in building a data flow from a source of internet traffic observation to the prediction service.
+
+Data flow will basically involved 3 message-driven microservice applications :
+ 
+ - anomaly-detection-source-file, to stream internet traffic observation
+ - anomaly-detection-predict microservice application, to make prediction based on input streamed internet traffic observation
+ - anomaly-detection-sink, to display prediction
+  
+ You will need [Kafka](https://kafka.apache.org/quickstart) [used as messaging middleware] to be installed and running.
+
+
+### step 1 - start anomaly-detection-predict microservice application
 ```shell
 $ cd anomaly-detection-predict
 $ mvn spring-boot:run
 ```
-## making prediction
+### step2 - start anomaly-detection-sink microservice application
 ```shell
-$ curl http://localhost:8080/predict?value=2750.50 
-$ 3244.099609375
+$ cd anomaly-detection-sink
+$ mvn spring-boot:run
+```
+### step 3 - start anomaly-detection-source-file microservice application
+This will make the data flow.
+```shell
+$ cd anomaly-detection-source-file
+$ mvn spring-boot:run
 ```
 
 # Build

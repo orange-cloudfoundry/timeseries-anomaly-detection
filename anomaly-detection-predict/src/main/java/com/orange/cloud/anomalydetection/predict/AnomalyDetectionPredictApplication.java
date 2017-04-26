@@ -7,6 +7,8 @@ import org.nd4j.linalg.dataset.api.preprocessor.serializer.NormalizerSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 
@@ -14,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 @SpringBootApplication
+@EnableBinding(Processor.class)
 public class AnomalyDetectionPredictApplication {
 
     public static void main(String[] args) {
