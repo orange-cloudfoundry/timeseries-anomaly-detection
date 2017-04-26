@@ -1,0 +1,7 @@
+---
+applications:
+- name: anomaly-detection-train
+  instances: 1
+  memory: 512M
+  path: target/anomaly-detection-train-1.0.0.BUILD-SNAPSHOT.jar
+  buildpack: java_buildpack
