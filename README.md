@@ -35,6 +35,18 @@ So as to reuse trained model, two files are saved after the training process :
 
 See [dl4j - Saving and Loading a Neural Network](https://deeplearning4j.org/modelpersistence#saving-and-loading-a-neural-network), for details on saving and loading a neural network.
 
+# Making prediction
+
+## runing the application
+```shell
+$ cd anomaly-detection-predict
+$ mvn spring-boot:run
+```
+## making prediction
+```shell
+$ curl http://localhost:8080/predict?value=2750.50 
+$ 3244.099609375
+```
 
 # Build
 

@@ -13,6 +13,7 @@
 
     <modules>
         <module>anomaly-detection-train</module>
+        <module>anomaly-detection-predict</module>
     </modules>
 
 
